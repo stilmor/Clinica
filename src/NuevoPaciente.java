@@ -12,11 +12,6 @@ import java.util.Iterator;
 
 
 public class NuevoPaciente extends JFrame implements MouseListener,ActionListener,WindowListener {
-    //TreeSet<Persona> listaper=new TreeSet<>();
-    //Iterator<Persona> iterador=listaper.iterator();
-    HashSet<Paciente> listap=new HashSet<>();
-    Iterator<Paciente> iter=listap.iterator();
-
     //componentes ventana de registro
 
     JPanel panel;

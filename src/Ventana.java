@@ -26,7 +26,6 @@ public class Ventana extends JFrame implements MouseListener,ActionListener,KeyL
         controlador = principal;
     }
 
-
     private void initcomponent() {
         usuario = new JLabel("Usuario");
         usuario.setForeground(Color.white);
@@ -37,13 +36,12 @@ public class Ventana extends JFrame implements MouseListener,ActionListener,KeyL
         aceptar = new JButton("Aceptar");
         cancelar = new JButton("Cancelar");
 
+        //implementacion del panel//
         panel = new JPanel();
         panel.setLayout(null);
         panel.setBackground(new Color(93,35,182));
 
-
-
-
+        //implementacion elementos del panel//
         usuario.setBounds(70, 50, 90, 40);
         panel.add(usuario);
         password.setBounds(70, 90, 90, 20);
@@ -61,11 +59,13 @@ public class Ventana extends JFrame implements MouseListener,ActionListener,KeyL
         panel.add(cancelar);
         cancelar.addMouseListener(this);
 
+        //llamada a menuBar e implementacion en el panel
         MenuBar menuBar = new MenuBar();
         menuBar.menuBar.setBounds(0, 0, getWidth(), 20);
         panel.add(menuBar.menuBar);
     }
 
+    //Eventos registrados
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -77,7 +77,14 @@ public class Ventana extends JFrame implements MouseListener,ActionListener,KeyL
         if (e.getSource() == aceptar) {
             char[] password = pass.getPassword();
             String userName = usu.getText();
-    //s        controlador.connectar(userName, password);
+            try {
+                Conexion conex = new Conexion(String.valueOf(password), userName);
+                panel.setVisible(false);
+                this.dispose();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            //s        controlador.connectar(userName, password);
 
 
         } else if (e.getSource() == cancelar) {
