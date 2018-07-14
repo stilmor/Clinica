@@ -82,7 +82,7 @@ public class Ventana2 extends JFrame implements MouseListener,ActionListener,Win
     //setNemonic
         //para el menu ejemplo close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
 
-        ImageIcon newIcon=new ImageIcon(interface);
+        //ImageIcon newIcon=new ImageIcon(interface);
 
 
 
