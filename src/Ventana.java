@@ -43,6 +43,7 @@ public class Ventana extends JFrame implements MouseListener,ActionListener,KeyL
 
 
 
+
         usuario.setBounds(70, 50, 90, 40);
         panel.add(usuario);
         password.setBounds(70, 90, 90, 20);
@@ -76,7 +77,7 @@ public class Ventana extends JFrame implements MouseListener,ActionListener,KeyL
         if (e.getSource() == aceptar) {
             char[] password = pass.getPassword();
             String userName = usu.getText();
-            controlador.connectar(userName, password);
+    //s        controlador.connectar(userName, password);
 
 
         } else if (e.getSource() == cancelar) {
@@ -117,7 +118,7 @@ public class Ventana extends JFrame implements MouseListener,ActionListener,KeyL
             String userName = usu.getText();
 
             try {
-                Conexion conex = new Conexion(password, userName);
+                Conexion conex = new Conexion(String.valueOf(password), userName);
                 panel.setVisible(false);
                 this.dispose();
 

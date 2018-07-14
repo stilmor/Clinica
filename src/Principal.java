@@ -4,8 +4,8 @@ public class Principal {
     Conexion conn;
     Ventana ventanaConnexion;
 
-    public void Principal() {
-        Ventana ventanaConnexion=new Ventana(this);
+    public Principal() {
+        new Ventana(this);
     }
     public void setConexion(Conexion conex){
         conn=conex;
@@ -13,8 +13,8 @@ public class Principal {
 
     public void connectar(String usuario, String password) {
         try {
-            Conexion conex = new Conexion(password, userName);
-            delete ventanaConnexion;
+            Conexion conex = new Conexion(password, usuario);
+           // delete ventanaConnexion;
            // panel.setVisible(false);
            /// this.dispose();
 
