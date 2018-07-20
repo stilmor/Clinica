@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.sql.SQLException;
 
-
+@SuppressWarnings("serial")
 public class Ventana2 extends JFrame implements MouseListener,ActionListener,WindowListener {
     JPanel panel;
     JButton nuevo;
@@ -25,8 +25,8 @@ public class Ventana2 extends JFrame implements MouseListener,ActionListener,Win
     Connection conn;
 
 
-    public Ventana2(Connection conn) {
-        this.conn=conn;
+    public Ventana2(Conexion conn) {
+        this.conn=conn.connexion().get();
         setSize(720, 720);
         this.setTitle("FisioNat");
         this.setResizable(false);
@@ -308,13 +308,7 @@ public class Ventana2 extends JFrame implements MouseListener,ActionListener,Win
     @Override
     public void windowClosing(WindowEvent e) {
         if (e.getSource()==this){
-            Conexion cerrar=new Conexion();
-            try {
-                cerrar.cerrarcon();
-                System.exit(0);
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.exit(0);
         }
     }
 
