@@ -1,13 +1,12 @@
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.sql.SQLException;
+
 
 public class Ventana2 extends JFrame implements MouseListener,ActionListener,WindowListener {
     JPanel panel;
@@ -24,12 +23,10 @@ public class Ventana2 extends JFrame implements MouseListener,ActionListener,Win
 
     MenuBar menuBar= new MenuBar();
     Connection conn;
-    Statement stmt = null;
 
 
-    public Ventana2(Connection conn) throws SQLException {
+    public Ventana2(Connection conn) {
         this.conn=conn;
-        stmt = conn.createStatement();
         setSize(720, 720);
         this.setTitle("FisioNat");
         this.setResizable(false);

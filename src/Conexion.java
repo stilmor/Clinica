@@ -4,13 +4,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class Conexion {
-   static Connection conn;
+   private Connection conn;
 
     public Conexion(String password, String userName) throws SQLException {
         System.out.println("conexion");
-        Statement stmt = null;
+    //    Statement stmt = null;
         conn = null;
 
         String url = "jdbc:mysql:" + "//127.0.0.1/natalia";
@@ -24,12 +23,10 @@ public class Conexion {
          //   Ventana2 nuevaVent = new Ventana2(conn);
 
         }
-
-
     }
 
-    public Conexion() {
-
+    public Connection connexion() {
+        return conn;
     }
 
     void cerrarcon() throws SQLException {
