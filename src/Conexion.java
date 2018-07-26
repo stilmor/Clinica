@@ -28,12 +28,12 @@ public class Conexion {
         return conn.isPresent();
     }
 
-    public Optional<Connection> connexion() {
-        return conn;
+    public Connection conexion() {
+        return conn.get();
     }
 
     void cerrarcon() throws SQLException {
-        conn.get().close();
+        conexion().close();
         System.out.println("conexion cerrada");
     }
 

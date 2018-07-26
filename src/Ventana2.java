@@ -2,9 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.sql.SQLException;
 
 @SuppressWarnings("serial")
@@ -12,7 +10,6 @@ public class Ventana2 extends JFrame implements ActionListener {
     JPanel panel;
     JButton nuevo;
     JButton buscar;
-
 
     //en ventana de busqueda
     JLabel nombre;
@@ -26,27 +23,24 @@ public class Ventana2 extends JFrame implements ActionListener {
 
 
     public Ventana2(Conexion conn) {
-        this.conn=conn.connexion().get();
-        setSize(720, 720);
+        this.conn=conn.conexion();
+
         this.setTitle("FisioNat");
         this.setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        initcomponent2();
-        this.setContentPane(panel);
+
+        JPanel mainPanel = initcomponent2();
+        this.setContentPane(mainPanel);
         this.setVisible(true);
 
-        Toolkit toolkit= panel.getToolkit();
-        Dimension size = toolkit.getScreenSize();
-
-        setLocation(size.width/2 - panel.getWidth(), size.height/2 - panel.getHeight()/2);
-
+        setSize(720, 720);
+        Dimension size = mainPanel.getToolkit().getScreenSize();
+        setLocation(size.width/2 - mainPanel.getWidth(), size.height/2 - mainPanel.getHeight()/2);
     }
 
-    private void initcomponent2() {
+    private JPanel initcomponent2() {
         System.out.println("componentes2");
-        //caracteristicas de ventana
-
 
         //componentes de la ventana2
 
@@ -75,15 +69,12 @@ public class Ventana2 extends JFrame implements ActionListener {
 
         //ImageIcon newIcon=new ImageIcon(interface);
 
-
-
         nuevo.addActionListener(this);
         buscar.addActionListener(this);
         name.addActionListener(this);
 //        apellido.addActionListener(this);
         ape.addActionListener(this);
         bus.addActionListener(this);
-
 
 
         panel = new JPanel();
@@ -95,18 +86,15 @@ public class Ventana2 extends JFrame implements ActionListener {
         panel.add(buscar);
 
 
-        MenuBar menuBar= new MenuBar();
+        MenuBar menuBar = new MenuBar();
         menuBar.menuBar.setBounds(0,0,getWidth(),20);
         panel.add(menuBar.menuBar);
+        return panel;
     }
 
     void consulta() throws InterruptedException, SQLException {
-        String sqlNombre = name.getText();
-        String sqlApellido=ape.getText();
-        //name.setText("la consulta es:" + sqlStr);
-        new TablaDatos(conn,sqlNombre,sqlApellido);
+        new TablaDatos(conn, name.getText(), ape.getText());
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -187,6 +175,4 @@ public class Ventana2 extends JFrame implements ActionListener {
             borrar();
         }*/
     }
-
-
 }
