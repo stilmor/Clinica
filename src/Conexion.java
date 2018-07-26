@@ -9,17 +9,17 @@ public class Conexion {
    private Optional<Connection> conn;
 
    // TODO: seguramente convertir en factory
-    public Conexion(String userName, String password) {
+    public Conexion() {
         conn = null;
-        String url = "jdbc:mysql:" + "//127.0.0.1/natalia";
+        // TODO: Por ahora la base de datos esta en memoria, esto hay que ponerlo en un fichero
+        String url = "jdbc:sqlite::memory:";
         try {
-            Connection conexion = DriverManager.getConnection(url, userName, password);
+            Connection conexion = DriverManager.getConnection(url);
             conn = Optional.of(conexion);
             System.out.println("La conexion con la DB es correcta.");
         } catch(SQLException excepcion) {
             conn = Optional.empty();
-            System.out.println("La conexion ha fallado.");
-            System.out.println("Usuario: " + userName);
+            System.out.println("La conexion con" + url + " ha fallado.");
             excepcion.printStackTrace();
         }
     }

@@ -1,6 +1,7 @@
+/*
 public class Excepciones extends Exception {
     //por el momento esta clase no se esta utilizando
-    /*String nombre;
+    String nombre;
     public Excepciones(String nombre) {
 
         this.nombre=nombre;
@@ -11,5 +12,6 @@ public class Excepciones extends Exception {
     @Override
     public String getMessage() {
         return "El paciente ya esta registrado";
-    }*/
+    }
 }
+*/
