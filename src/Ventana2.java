@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.sql.SQLException;
 
 @SuppressWarnings("serial")
-public class Ventana2 extends JFrame implements MouseListener,ActionListener,WindowListener {
+public class Ventana2 extends JFrame implements ActionListener {
     JPanel panel;
     JButton nuevo;
     JButton buscar;
@@ -30,8 +30,7 @@ public class Ventana2 extends JFrame implements MouseListener,ActionListener,Win
         setSize(720, 720);
         this.setTitle("FisioNat");
         this.setResizable(false);
-        this.addWindowListener(this);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         initcomponent2();
         this.setContentPane(panel);
@@ -78,12 +77,12 @@ public class Ventana2 extends JFrame implements MouseListener,ActionListener,Win
 
 
 
-        nuevo.addMouseListener(this);
-        buscar.addMouseListener(this);
-        name.addMouseListener(this);
-        apellido.addMouseListener(this);
-        ape.addMouseListener(this);
-        bus.addMouseListener(this);
+        nuevo.addActionListener(this);
+        buscar.addActionListener(this);
+        name.addActionListener(this);
+//        apellido.addActionListener(this);
+        ape.addActionListener(this);
+        bus.addActionListener(this);
 
 
 
@@ -96,109 +95,21 @@ public class Ventana2 extends JFrame implements MouseListener,ActionListener,Win
         panel.add(buscar);
 
 
-
-
-
         MenuBar menuBar= new MenuBar();
         menuBar.menuBar.setBounds(0,0,getWidth(),20);
-        menuBar.salir.addActionListener(this);
         panel.add(menuBar.menuBar);
-
-
-    }
-    /*void coleccion() throws IOException {
-     //aqui cargamos los archivos de el fichero de txt//
-        FileReader carga= null;
-
-        carga = new FileReader("c:\\fichero\\fichero.txt");
-        BufferedReader lee=new BufferedReader(carga);
-        ArrayList<String> contenedor= new ArrayList<>();
-        String aux= null;
-
-            aux = lee.readLine();
-        int cont=0;
-        while (aux!=null){
-            String [] arrstring=aux.split(" ");
-            String nombree=arrstring[0];
-            int edada = Integer.parseInt(arrstring[1]);
-            //String apellidoo=arrstring[2];
-            Paciente nuevaPer=new Paciente(nombree,edada);
-            //añadimos los datos a la coleccion.
-            if (!listap.add(nuevaPer)){
-                System.out.println(nuevaPer.nombre + " ya esta en la lista");
-            }
-            aux=lee.readLine();
-
-        }
-
-        for (Persona ver:listap) {
-
-            System.out.println(ver.nombre +" "+ ver.edad);
-        }
     }
 
-    void volcar() throws SQLException {
-
-        stmt = (Statement) conn.createStatement();
-        for (Persona vol:listap) {
-            String nombre=vol.nombre;
-            int edad=vol.edad;
-            String inse="insert into personas (nombre,edad) values ('"+nombre+"',"+edad+")";
-                int rset = stmt.executeUpdate(inse);
-        }
-    }*/
     void consulta() throws InterruptedException, SQLException {
-
-            String sqlNombre = name.getText();
-            String sqlApellido=ape.getText();
-            //name.setText("la consulta es:" + sqlStr);
-            new TablaDatos(conn,sqlNombre,sqlApellido);
-
-
-
-
-            //ResultSet rset = null;
-            //rset = stmt.executeQuery(sqlNombre+sqlApellido);
-            /*while (rset.next()){
-                salida.setText(rset.getString("nombre") + ", " +
-                       rset.getString("edad"));
-            }*/
-
+        String sqlNombre = name.getText();
+        String sqlApellido=ape.getText();
+        //name.setText("la consulta es:" + sqlStr);
+        new TablaDatos(conn,sqlNombre,sqlApellido);
     }
 
-    /*private void actua() throws SQLException {
-        String sqlStr=entrada.getText();
-        stmt = (Statement) conn.createStatement();
-        System.out.println("el update es: " + sqlStr);
-        int rset = stmt.executeUpdate(sqlStr);
-    }*/
-
-    /*private void borrar() {
-        Iterator<Persona> iterador = listap.iterator();
-
-        Persona perAux = new Persona();
-        perAux.nombre = entrada.getText();
-        Persona miAux;
-        while (iterador.hasNext()) {
-            miAux = iterador.next();
-            if (miAux.nombre.compareTo(perAux.nombre) == 0) {
-                iterador.remove();
-                for (Persona ver:listap){
-                    System.out.println(ver.nombre);
-                }
-            }
-
-        }
-    }*/
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==menuBar.salir){
-        }
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
         if (e.getSource()==buscar){
             panel.add(nombre);
             panel.add(name);
@@ -278,62 +189,4 @@ public class Ventana2 extends JFrame implements MouseListener,ActionListener,Win
     }
 
 
-
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-        if (e.getSource()==this){
-            System.exit(0);
-        }
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
 }
