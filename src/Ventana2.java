@@ -46,7 +46,7 @@ public class Ventana2 extends JFrame {
         nuevo = new JButton("Nuevo Paciente"); 
         nuevo.setBounds(50, 100, 160, 25);
         nuevo.setToolTipText("Rellena un nuevo paciente");
-        nuevo.addActionListener(e -> nuevo());
+        nuevo.addActionListener(e ->  new NuevoPaciente(conn));
         panel.add(nuevo);
 
         salir = new JButton("Salir");
@@ -82,13 +82,5 @@ public class Ventana2 extends JFrame {
         try {new TablaDatos(conn, name.getText(), ape.getText());}
         catch (InterruptedException e1) {e1.printStackTrace();}
         catch (SQLException e1) {e1.printStackTrace();}
-    }
-
-    private void nuevo() {
-        try {
-            new NuevoPaciente(conn);
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
     }
 }

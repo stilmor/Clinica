@@ -50,9 +50,8 @@ public class NuevoPaciente extends JFrame implements MouseListener,ActionListene
     public String idPaciente ="";
 
 
-    public NuevoPaciente (Connection conn) throws SQLException {
+    public NuevoPaciente (Connection conn) {
         this.conn=conn;
-        stmt = conn.createStatement();
         setSize(1024,1024);
         this.setTitle("Nuevo Paciente");
         this.setResizable(false);
