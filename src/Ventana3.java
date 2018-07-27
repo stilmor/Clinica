@@ -168,15 +168,10 @@ public class Ventana3 extends JFrame implements ActionListener {
         panel.add(tratamiento);
         panel.add(eDiagnostico);
 
-
-
         this.setContentPane(panel);
         this.setVisible(true);
 
         cerrar.addActionListener(this);
-        MenuBar menuBar= new MenuBar();
-        menuBar.menuBar.setBounds(0,0,getWidth(),20);
-        panel.add(menuBar.menuBar);
         datos(id);
     }
 

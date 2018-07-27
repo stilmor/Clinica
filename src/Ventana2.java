@@ -1,86 +1,127 @@
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.sql.Connection;
-import java.util.HashSet;
-import java.sql.SQLException;
 
-@SuppressWarnings("serial")
-public class Ventana2 extends JFrame {
-    JPanel panel;
-    JButton nuevo;
-    JButton salir;
-
-    //en ventana de busqueda
-    JLabel nombre;
-    JTextField name;
-    JLabel apellido;
-    JTextField ape;
-    JButton bus;
-
-    Connection conn;
+public class Ventana2 {
+    Conexion conn;
 
     public Ventana2(Conexion conn) {
-        this.conn=conn.conexion();
+        this.conn=conn;
 
-        this.setTitle("FisioNat");
-        this.setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+        JFrame frame = new JFrame("FisioNat");
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel mainPanel = initcomponent2();
-        this.setContentPane(mainPanel);
-        this.setVisible(true);
-
-        setSize(720, 720);
-        Dimension size = mainPanel.getToolkit().getScreenSize();
-        setLocation(size.width/2 - mainPanel.getWidth(), size.height/2 - mainPanel.getHeight()/2);
+        frame.add(mainPanel);
+        frame.setContentPane(mainPanel);
+        frame.pack();
+        frame.setLocationRelativeTo(null); //centra en pantalla
+        frame.setVisible(true);
     }
 
+    // Estos 3 metodos es lo que realmente hace este UI
+    private void accion_boton_nuevo() {
+        new NuevoPaciente(conn);
+    }
+
+    private void accion_boton_buscar(String nombre, String apellido) {
+        new TablaDatos(conn, nombre, apellido);
+    }
+
+    private void accion_boton_salir() {
+        FisioNat.exit(0);
+    }
+
+    // De aqui para abajo solo son cosas de layout
+
     private JPanel initcomponent2() {
-        panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBackground(new Color(93,35,182));
-        this.add(panel);
+        JPanel panel = crear_panel_basico();
+        panel.setLayout(new BorderLayout(10,10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        nuevo = new JButton("Nuevo Paciente"); 
-        nuevo.setBounds(50, 100, 160, 25);
+        // Boton para crear nuevo paciente
+        JButton nuevo = new JButton("Nuevo paciente");
         nuevo.setToolTipText("Rellena un nuevo paciente");
-        nuevo.addActionListener(e ->  new NuevoPaciente(conn));
-        panel.add(nuevo);
+        nuevo.addActionListener(e -> accion_boton_nuevo());
 
-        salir = new JButton("Salir");
-        salir.setBounds(500, 500, 160, 25);
+        JPanel panel_nuevo = crear_panel_titulo("Nuevo paciente");
+        set_layout_basico(panel_nuevo);
+        panel_nuevo.add(nuevo);
+
+        JPanel panel_buscar = FormularioBuscar();
+
+        // Boton salir
+        JButton salir = new JButton("Salir");
         salir.setToolTipText("Salir de la aplicacion");
-        salir.addActionListener(e -> FisioNat.exit(0));
-        panel.add(salir);
+        salir.addActionListener(e -> accion_boton_salir());
 
-        nombre = new JLabel("Nombre:");
-        nombre.setForeground(Color.white);
-        nombre.setBounds(500,140,50,25);
-        panel.add(nombre);
-        name = new JTextField(20);
-        name.setBounds(550,140,100,25);
-        panel.add(name);
-        apellido = new JLabel("Apellido:");
-        apellido.setBounds(500,175,50,25);
-        apellido.setForeground(Color.white);
-        panel.add(apellido);
-        ape= new JTextField(20);
-        ape.setBounds(550,175,100,25);
-        panel.add(ape);
+        JPanel panel_salir = crear_panel_basico();
+        set_layout_basico(panel_salir);
+        panel_salir.add(salir);
 
-        bus = new JButton(new ImageIcon("C:\\Users\\Raistlin\\IdeaProjects\\control\\Interfaz clinica\\Imagenes\\buscar.jpg"));
-        bus.setBounds(550,250,50,50);
-        bus.addActionListener(e -> consulta());
-        panel.add(bus);
+        //Ponerlos todos en ventana
+        panel.add(panel_nuevo,BorderLayout.WEST);
+        panel.add(panel_buscar,BorderLayout.EAST);
+        panel.add(panel_salir, BorderLayout.SOUTH);
 
         return panel;
     }
 
-    void consulta() {
-        try {new TablaDatos(conn, name.getText(), ape.getText());}
-        catch (InterruptedException e1) {e1.printStackTrace();}
-        catch (SQLException e1) {e1.printStackTrace();}
+    private JPanel FormularioBuscar() {
+        JPanel panel_buscar = crear_panel_titulo("Buscar paciente");
+        panel_buscar.setLayout(new GridBagLayout());//GridLayout(3, 2));
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        JLabel nombre = new JLabel("Nombre:");
+        nombre.setForeground(Color.white);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel_buscar.add(nombre, gbc);
+
+        JTextField name = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panel_buscar.add(name, gbc);
+
+        JLabel apellido = new JLabel("Apellido:");
+        apellido.setForeground(Color.white);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel_buscar.add(apellido, gbc);
+
+        JTextField ape= new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel_buscar.add(ape, gbc);
+
+        JButton bus = new JButton("Buscar");
+        bus.setToolTipText("Buscar un paciente");
+        bus.addActionListener(e -> accion_boton_buscar(name.getText(), ape.getText()));
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        panel_buscar.add(bus, gbc);
+        return panel_buscar;
     }
+
+    private JPanel crear_panel_titulo(String titulo) {
+        JPanel panel = crear_panel_basico();
+        TitledBorder border = BorderFactory.createTitledBorder(titulo);
+        border.setTitleColor(Color.white);
+        panel.setBorder(border);
+        return panel;
+    }
+
+    private JPanel crear_panel_basico() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(93,35,182));
+        return panel;
+    }
+
+    private void set_layout_basico(JPanel panel) {
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.add(Box.createHorizontalGlue());
+    }
+
 }

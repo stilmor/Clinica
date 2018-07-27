@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class NuevoPaciente extends JFrame implements MouseListener,ActionListener,WindowListener {
+public class NuevoPaciente extends JFrame implements MouseListener,WindowListener {
     //componentes ventana de registro
 
     JPanel panel;
@@ -43,15 +43,13 @@ public class NuevoPaciente extends JFrame implements MouseListener,ActionListene
     JLabel eTratamiento;
     TextArea tratamiento;
 
-    //menuBar cargado desde una clase propia
-    MenuBar menuBar= new MenuBar();
     Connection conn;
     Statement stmt = null;
     public String idPaciente ="";
 
 
-    public NuevoPaciente (Connection conn) {
-        this.conn=conn;
+    public NuevoPaciente (Conexion conn) {
+        this.conn=conn.conexion();
         setSize(1024,1024);
         this.setTitle("Nuevo Paciente");
         this.setResizable(false);
@@ -175,12 +173,6 @@ public class NuevoPaciente extends JFrame implements MouseListener,ActionListene
         panel.add(tratamiento);
         panel.add(registrar);
         panel.add(cancelar);
-
-        MenuBar menuBar= new MenuBar();
-        menuBar.menuBar.setBounds(0,0,getWidth(),20);
-        menuBar.salir.addActionListener(this);
-        panel.add(menuBar.menuBar);
-
 
     }
     /*void coleccion() throws IOException {
@@ -409,12 +401,6 @@ public class NuevoPaciente extends JFrame implements MouseListener,ActionListene
         }
         }
 
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==menuBar.salir){
-        }
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {

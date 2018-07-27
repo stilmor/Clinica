@@ -37,9 +37,9 @@ public class TablaDatos extends JFrame implements MouseListener, ActionListener,
 
 
 
-    public TablaDatos(Connection conn, String sqlNombre, String sqlApellido) throws SQLException, InterruptedException {
+    public TablaDatos(Conexion conn, String sqlNombre, String sqlApellido)  {
         System.out.println(conn);
-        this.conn = conn;
+        this.conn = conn.conexion();
         this.sqlNombre=sqlNombre;
         this.sqlApellido=sqlApellido;
 
@@ -49,7 +49,12 @@ public class TablaDatos extends JFrame implements MouseListener, ActionListener,
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         initcomponent();
-        cargarDatosTable(sqlNombre,sqlApellido);
+        //TODO: Hacer algo aqui cuando haya excepcion
+        try {
+          cargarDatosTable(sqlNombre,sqlApellido);
+        }
+        catch (InterruptedException e1) {e1.printStackTrace();}
+        catch (SQLException e1) {e1.printStackTrace();}
 
     }
 
@@ -71,16 +76,8 @@ public class TablaDatos extends JFrame implements MouseListener, ActionListener,
         tabla.addMouseListener(this);
 
 
-
-        MenuBar menuBar = new MenuBar();
-        menuBar.menuBar.setBounds(0, 0, getWidth(), 20);
-        panel.add(menuBar.menuBar);
-
-
         this.setContentPane(panel);
         this.setVisible(true);
-
-
     }
 
     protected void cargarDatosTable(String sqlNombre, String sqlApellido) throws SQLException, InterruptedException {
