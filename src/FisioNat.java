@@ -1,5 +1,7 @@
+import java.io.IOException;
+
 public class FisioNat {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new Principal();
     }
     public static void exit(int error_code) {

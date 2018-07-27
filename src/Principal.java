@@ -1,9 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.Optional;
 
 public class Principal {
-    public Principal() {
+    public Principal() throws IOException {
         Conexion conn =  new Conexion();
         if (!conn.esta_connectado()) {
             String error = "La conexion a la base de datos ha fallado. ";

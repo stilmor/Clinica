@@ -197,13 +197,14 @@ public class Ventana3 extends JFrame implements ActionListener {
                         "apellido"));
                 //fechaNacimiento.setText(rset.getString("fecha_nacimiento"));
 
-                fechaNacimiento.setText(cambiarFecha(rset.getString("fecha_nacimiento")));
+               // fechaNacimiento.setText(cambiarFecha(rset.getString("fecha_nacimiento")));
                 telefono.setText(rset.getString("telefono"));
                 ocupacion.setText(rset.getString("ocupacion"));
                 alergias.setText(rset.getString("alergias"));
                 medicacion.setText(rset.getString("medicacion"));
                 ejercicio.setText(rset.getString("ejercicio"));
                 cirugia.setText(rset.getString("cirugia"));
+
             }
         }
 

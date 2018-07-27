@@ -1,14 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
 import java.sql.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 
 
 public class NuevoPaciente extends JFrame implements MouseListener,ActionListener,WindowListener {
@@ -505,9 +501,6 @@ public class NuevoPaciente extends JFrame implements MouseListener,ActionListene
             borrar();
         }*/
     }
-
-
-
 
     @Override
     public void mousePressed(MouseEvent e) {
