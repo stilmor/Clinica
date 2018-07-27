@@ -2,16 +2,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.HashSet;
+import java.sql.Statement;
 
 public class Conexion {
-   private Optional<Connection> conn;
+    private Optional<Connection> conn;
+    HashSet<String> tablas = new HashSet<>();
 
-   // TODO: seguramente convertir en factory
+
+    // TODO: seguramente convertir en factory
     public Conexion() throws IOException {
         conn = null;
         // TODO: Por ahora la base de datos esta en memoria, esto hay que ponerlo en un fichero
@@ -20,8 +22,8 @@ public class Conexion {
             Connection conexion = DriverManager.getConnection(url);
             conn = Optional.of(conexion);
             System.out.println("La conexion con la DB es correcta.");
-            leer_Tablas();
-        } catch(SQLException excepcion) {
+            comprobar_tablas();
+        } catch (SQLException excepcion) {
             conn = Optional.empty();
             System.out.println("La conexion con" + url + " ha fallado.");
             excepcion.printStackTrace();
@@ -41,41 +43,27 @@ public class Conexion {
         System.out.println("conexion cerrada");
     }
 
-    private void comprobar_tablas(){
+    private void comprobar_tablas() throws IOException {
         //comando para crear tablas show create table [tabla]
 
-        /*hola ein hola
-        mimi trusmi
-         */
-
-        /*String creaTablas="CREATE TABLE `pacientes` (`id` int(11) NOT NULL AUTO_INCREMENT,\n" +
-                "  `nombre` varchar(100) NOT NULL,\n" +
-                "  `apellido` varchar(100) NOT NULL,\n" +
-                "  `fecha_nacimiento` date DEFAULT NULL,\n" +
-                "  `telefono` int(9) DEFAULT NULL,\n" +
-                "  `creado_en` date NOT NULL,\n" +
-                "  `modificado` date NOT NULL,\n" +
-                "  PRIMARY KEY (`id`))";*/
+      Statement stmt = conn.createStatament();
+        ResultSet rset = null;
+        String creaTablas ="";
     }
 
-    private void leer_Tablas() throws IOException {
-        HashSet<String>tablas=new HashSet<String>();
+        private void leer_Tablas() throws IOException {
 
-        FileReader reader= new FileReader("C:\\Users\\Raistlin\\IdeaProjects\\control\\Interfaz clinica\\src\\tablas");
-        BufferedReader buffer= new BufferedReader(reader);
+            FileReader reader = new FileReader("C:\\Users\\Raistlin\\IdeaProjects\\control\\Interfaz clinica\\src\\tablas");
+            BufferedReader buffer = new BufferedReader(reader);
+            String aux = buffer.readLine();
+            while (aux != null) {
+                String[] arrString = aux.split("; ");
+                String create = arrString[0];
+                tablas.add(create);
+                aux = buffer.readLine();
+            }
 
-        while (buffer.readLine()!=null){
-            System.out.println("en el while");
-            String [] arrString=buffer.readLine().split(";");
-            String create=arrString[0];
-            tablas.add(create);
+            for (String content : tablas) {
+            }
         }
-        for (String content:tablas) {
-            System.out.println(content);
-            System.out.println("leyendo");
-        }
-        System.out.println("leido");
-
-
     }
-}
