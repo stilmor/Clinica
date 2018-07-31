@@ -23,6 +23,7 @@ public class Conexion {
             conn = Optional.of(conexion);
             System.out.println("La conexion con la DB es correcta.");
             comprobar_tablas();
+
         } catch (SQLException excepcion) {
             conn = Optional.empty();
             System.out.println("La conexion con" + url + " ha fallado.");
@@ -43,12 +44,18 @@ public class Conexion {
         System.out.println("conexion cerrada");
     }
 
-    private void comprobar_tablas() throws IOException {
-        //comando para crear tablas show create table [tabla]
+    private void comprobar_tablas() throws IOException, SQLException {
+      //comando para crear tablas show create table [tabla]
 
-      Statement stmt = conn.createStatament();
-        ResultSet rset = null;
-        String creaTablas ="";
+      leer_Tablas();
+      Statement stmt = conexion().createStatement();
+      for (String content : tablas) {
+        stmt.execute(content);
+      }
+        String comprobacion=".tables";
+        //PENDIENTE VER LAS TABLAS CREADAS
+        System.out.println(stmt.execute(comprobacion));
+
     }
 
         private void leer_Tablas() throws IOException {
@@ -61,9 +68,6 @@ public class Conexion {
                 String create = arrString[0];
                 tablas.add(create);
                 aux = buffer.readLine();
-            }
-
-            for (String content : tablas) {
             }
         }
     }
